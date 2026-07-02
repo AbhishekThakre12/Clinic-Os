@@ -292,15 +292,15 @@ export default function AdminAppointmentsPage() {
                   </th>
                   {([ 
                     { label: "Patient",   field: "name" as SortField },
-                    { label: "Phone",     field: null },
-                    { label: "Email",     field: null },
-                    { label: "Treatment", field: "treatment" as SortField },
-                    { label: "Date",      field: "preferred_date" as SortField },
-                    { label: "Time",      field: null },
-                    { label: "Message",   field: null },
-                    { label: "Status",    field: "status" as SortField },
-                    { label: "Booked At", field: "created_at" as SortField },
-                    { label: "Actions",   field: null },
+{ label: "Phone",     field: null },
+{ label: "Treatment", field: "treatment" as SortField },
+{ label: "Date",      field: "preferred_date" as SortField },
+{ label: "Time",      field: null },
+{ label: "Message",   field: null },
+{ label: "Status",    field: "status" as SortField },
+{ label: "Booked At", field: "created_at" as SortField },
+{ label: "Actions",   field: null },
+{ label: "Email",     field: null },
                   ]).map(({ label, field }) => (
                     <th
                       key={label}
@@ -338,12 +338,7 @@ export default function AdminAppointmentsPage() {
                           <Phone className="h-3.5 w-3.5 shrink-0" />{a.phone}
                         </a>
                       </td>
-                      {/* Email */}
-                      <td className="border-r border-ink/5 px-4 py-3">
-                        {a.email
-                          ? <a href={`mailto:${a.email}`} className="flex items-center gap-1.5 text-ink/60 hover:text-primary whitespace-nowrap"><Mail className="h-3.5 w-3.5 shrink-0" />{a.email}</a>
-                          : <span className="text-ink/25">—</span>}
-                      </td>
+            
                       {/* Treatment */}
                       <td className="border-r border-ink/5 px-4 py-3 whitespace-nowrap">
                         <span className="flex items-center gap-1.5 text-ink/70"><Stethoscope className="h-3.5 w-3.5 shrink-0 text-primary/50" />{a.treatment}</span>
@@ -392,6 +387,12 @@ export default function AdminAppointmentsPage() {
                             className="flex h-7 w-7 items-center justify-center rounded-md bg-red-50 text-red-500 hover:bg-red-100 transition-colors"
                           ><Trash2 className="h-3.5 w-3.5" /></button>
                         </div>
+                      </td>
+                       {/* Email */}
+                      <td className="border-r border-ink/5 px-4 py-3">
+                        {a.email
+                          ? <a href={`mailto:${a.email}`} className="flex items-center gap-1.5 text-ink/60 hover:text-primary whitespace-nowrap"><Mail className="h-3.5 w-3.5 shrink-0" />{a.email}</a>
+                          : <span className="text-ink/25">—</span>}
                       </td>
                     </tr>
                   );
