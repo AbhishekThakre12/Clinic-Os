@@ -11,7 +11,13 @@ import type { AppointmentRecord, AppointmentStatus } from "@/lib/db";
 
 const STORAGE_KEY = "clinicos_admin_key";
 
-type SortField = "name" | "treatment" | "preferred_date" | "status" | "created_at";
+type SortField =
+  | "name"
+  | "treatment"
+  | "preferred_date"
+  | "preferred_time"
+  | "status"
+  | "created_at";
 type SortDir = "asc" | "desc";
 
 const STATUS_CONFIG: Record<AppointmentStatus, { label: string; icon: typeof CheckCircle2; pill: string; row: string }> = {
@@ -100,9 +106,29 @@ export default function AdminAppointmentsPage() {
       );
     }
     rows.sort((a, b) => {
-      const av = a[sort.field] ?? "";
-      const bv = b[sort.field] ?? "";
-      return sort.dir === "asc" ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
+      if (sort.field === "preferred_time") {
+  const toMinutes = (time: string) => {
+    const [t, period] = time.split(" ");
+    let [h, m] = t.split(":").map(Number);
+
+    if (period === "PM" && h !== 12) h += 12;
+    if (period === "AM" && h === 12) h = 0;
+
+    return h * 60 + m;
+  };
+
+  const av = toMinutes(a.preferred_time);
+  const bv = toMinutes(b.preferred_time);
+
+  return sort.dir === "asc" ? av - bv : bv - av;
+}
+
+const av = a[sort.field] ?? "";
+const bv = b[sort.field] ?? "";
+
+return sort.dir === "asc"
+  ? String(av).localeCompare(String(bv))
+  : String(bv).localeCompare(String(av));
     });
     return rows;
   }, [appointments, filterStatus, search, sort]);
@@ -295,7 +321,7 @@ export default function AdminAppointmentsPage() {
 { label: "Phone",     field: null },
 { label: "Treatment", field: "treatment" as SortField },
 { label: "Date",      field: "preferred_date" as SortField },
-{ label: "Time",      field: null },
+{ label: "Time", field: "preferred_time" as SortField },
 { label: "Message",   field: null },
 { label: "Status",    field: "status" as SortField },
 { label: "Booked At", field: "created_at" as SortField },
