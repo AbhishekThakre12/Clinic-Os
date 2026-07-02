@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 
 const appointmentSchema = z.object({
   name: z.string().trim().min(2, "Name is too short").max(120),
-  phone: z.string().trim().min(7, "Enter a valid phone number").max(20),
+  phone: z.string().trim().min(10, "Enter a valid phone number").max(10),
   email: z.string().trim().email().optional().or(z.literal("")),
   treatment: z.string().trim().min(2),
   preferredDate: z.string().trim().min(1, "Date is required"),
